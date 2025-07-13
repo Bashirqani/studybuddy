@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes"); 
 const noteRoutes = require("./routes/noteRoutes");
 
-const cors = require("cors");
+
 
 const allowedOrigins = [
   "https://studybuddy-frontend-1f2h.onrender.com", // your actual frontend URL on Render
