@@ -14,12 +14,6 @@ const allowedOrigins = [
   "http://localhost:3001" // for local development
 ];
 
-app.use(cors({
-  origin: allowedOrigins,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
-
 
 
 const app = express(); 
