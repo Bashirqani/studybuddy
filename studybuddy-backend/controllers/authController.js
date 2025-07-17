@@ -19,20 +19,37 @@ exports.register = async (req, res) => {
 }; 
 
 exports.login = async (req, res) => {
+  console.log("Login route hit with body:", req.body);
   const { email, password } = req.body;
+  
   try {
+    console.log("Finding user with email:", email);
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ msg: "User not found" });
+    if (!user) {
+      console.log("User not found");
+      return res.status(400).json({ msg: "User not found" });
+    }
 
+    console.log("Checking password...");
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
+    if (!isMatch) {
+      console.log("Password mismatch");
+      return res.status(400).json({ msg: "Invalid credentials" });
+    }
 
+    console.log("Generating token...");
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 
-    res.json({ token, user: { id: user._id, username: user.username, email: user.email } });
+    console.log("Login successful");
+    res.json({
+      token,
+      user: { id: user._id, username: user.username, email: user.email },
+    });
+
   } catch (err) {
+    console.error("Login error:", err);
     res.status(500).json({ error: err.message });
   }
 };
