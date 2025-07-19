@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
+    // Theme check
     const storedTheme = localStorage.getItem("darkMode");
     if (storedTheme === "true") {
       document.body.classList.add("dark");
@@ -14,6 +17,12 @@ export default function Navbar() {
       document.body.classList.remove("dark");
     }
   }, []);
+
+  // Check login state on route change
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, [location.pathname]); // triggers every time route changes
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -25,10 +34,9 @@ export default function Navbar() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     sessionStorage.removeItem("welcomeShown");
+    setIsLoggedIn(false);
     navigate("/");
   };
-
-  const isLoggedIn = !!localStorage.getItem("token");
 
   return (
     <nav className="navbar">
@@ -55,6 +63,7 @@ export default function Navbar() {
     </nav>
   );
 }
+
 
 
 
