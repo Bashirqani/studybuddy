@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api";
 
-
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +15,11 @@ export default function Login() {
       const res = await API.post("/auth/login", { email, password });
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
+      
       navigate("/notes");
+      
+      // Refresh the app so Navbar detects the new login state
+      window.location.reload();
     } catch (err) {
       setError(err.response?.data?.msg || "Login failed");
     }
@@ -51,5 +54,6 @@ export default function Login() {
     </div>
   );
 }
+
 
 
