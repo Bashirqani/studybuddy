@@ -6,8 +6,6 @@ export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-
-  // Load dark mode preference
   useEffect(() => {
     const storedTheme = localStorage.getItem("darkMode");
     if (storedTheme === "true") {
@@ -16,23 +14,17 @@ export default function Navbar() {
     } else {
       document.body.classList.remove("dark");
     }
-  }, []);
 
-  // Always check token on mount and when localStorage changes
-  useEffect(() => {
-    const checkLoginStatus = () => {
+    const checkLogin = () => {
       const token = localStorage.getItem("token");
       setIsLoggedIn(!!token);
     };
 
-    checkLoginStatus();
+    checkLogin();  // check on mount
 
-    // Update login status when localStorage changes (like logout in another tab)
-    window.addEventListener("storage", checkLoginStatus);
+    window.addEventListener("storage", checkLogin); // sync across tabs
 
-    return () => {
-      window.removeEventListener("storage", checkLoginStatus);
-    };
+    return () => window.removeEventListener("storage", checkLogin);
   }, []);
 
   const toggleDarkMode = () => {
@@ -47,6 +39,7 @@ export default function Navbar() {
     sessionStorage.removeItem("welcomeShown");
     setIsLoggedIn(false);
     navigate("/");
+    window.location.reload();
   };
 
   return (
