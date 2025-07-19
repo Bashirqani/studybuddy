@@ -15,11 +15,9 @@ export default function Login() {
       const res = await API.post("/auth/login", { email, password });
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
-      
+
       navigate("/notes");
-      
-      // Refresh the app so Navbar detects the new login state
-      window.location.reload();
+      window.location.reload();  // Refresh to ensure Navbar updates
     } catch (err) {
       setError(err.response?.data?.msg || "Login failed");
     }
@@ -29,7 +27,7 @@ export default function Login() {
     <div className="login-page">
       <div className="login-about">
         <h3>📚 About StudyBuddy</h3>
-        <p>StudyBuddy is your personal assistant to help you manage notes and flashcards in one simple app.</p>
+        <p>Manage notes and flashcards to boost your study.</p>
       </div>
 
       <div className="auth-container">
@@ -54,6 +52,7 @@ export default function Login() {
     </div>
   );
 }
+
 
 
 

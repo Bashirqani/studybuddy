@@ -13,21 +13,19 @@ export default function Notes() {
     checkWelcomeStatus();
   }, []);
 
-const checkWelcomeStatus = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (user) {
-    setUsername(user.username);
+  const checkWelcomeStatus = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      setUsername(user.username);
 
-    if (!sessionStorage.getItem("welcomeShown")) {
-      setShowWelcome(true);
-      sessionStorage.setItem("welcomeShown", "true");
+      if (!sessionStorage.getItem("welcomeShown")) {
+        setShowWelcome(true);
+        sessionStorage.setItem("welcomeShown", "true");
 
-      setTimeout(() => setShowWelcome(false), 15000);
+        setTimeout(() => setShowWelcome(false), 15000);
+      }
     }
-  }
-};
-
-
+  };
 
   const fetchNotes = async () => {
     try {
@@ -106,4 +104,5 @@ const checkWelcomeStatus = () => {
     </div>
   );
 }
+
 

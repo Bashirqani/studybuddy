@@ -25,9 +25,24 @@ export default function Register() {
       <div className="auth-container">
         <h2>Create your StudyBuddy account</h2>
         <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} required />
-          <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} required />
-          <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required />
+          <input
+            type="text"
+            placeholder="Username"
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
           <button type="submit">Register</button>
           {error && <p className="error">{error}</p>}
         </form>

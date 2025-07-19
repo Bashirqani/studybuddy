@@ -8,19 +8,9 @@ export default function Navbar() {
   const location = useLocation();
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("darkMode");
-    if (storedTheme === "true") {
-      document.body.classList.add("dark");
-      setDarkMode(true);
-    } else {
-      document.body.classList.remove("dark");
-    }
-  }, []);
-
-  useEffect(() => {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
-  }, [location.pathname]); // re-check whenever path changes (like after login)
+  }, [location.pathname]);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -34,6 +24,7 @@ export default function Navbar() {
     sessionStorage.removeItem("welcomeShown");
     setIsLoggedIn(false);
     navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -61,6 +52,7 @@ export default function Navbar() {
     </nav>
   );
 }
+
 
 
 
