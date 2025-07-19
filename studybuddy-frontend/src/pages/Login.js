@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api";
 
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +17,6 @@ export default function Login() {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       navigate("/notes");
-      window.location.reload(); // Force reload to re-render Navbar state
     } catch (err) {
       setError(err.response?.data?.msg || "Login failed");
     }
@@ -24,6 +24,11 @@ export default function Login() {
 
   return (
     <div className="login-page">
+      <div className="login-about">
+        <h3>📚 About StudyBuddy</h3>
+        <p>StudyBuddy is your personal assistant to help you manage notes and flashcards in one simple app.</p>
+      </div>
+
       <div className="auth-container">
         <h2>Login to StudyBuddy</h2>
         <form onSubmit={handleSubmit}>
@@ -46,6 +51,5 @@ export default function Login() {
     </div>
   );
 }
-
 
 

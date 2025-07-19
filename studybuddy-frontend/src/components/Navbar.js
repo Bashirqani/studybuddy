@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("darkMode");
@@ -14,18 +15,12 @@ export default function Navbar() {
     } else {
       document.body.classList.remove("dark");
     }
-
-    const checkLogin = () => {
-      const token = localStorage.getItem("token");
-      setIsLoggedIn(!!token);
-    };
-
-    checkLogin();  // check on mount
-
-    window.addEventListener("storage", checkLogin); // sync across tabs
-
-    return () => window.removeEventListener("storage", checkLogin);
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, [location.pathname]); // re-check whenever path changes (like after login)
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -39,7 +34,6 @@ export default function Navbar() {
     sessionStorage.removeItem("welcomeShown");
     setIsLoggedIn(false);
     navigate("/");
-    window.location.reload();
   };
 
   return (
@@ -67,6 +61,7 @@ export default function Navbar() {
     </nav>
   );
 }
+
 
 
 
