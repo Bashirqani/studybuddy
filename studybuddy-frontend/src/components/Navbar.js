@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation(); 
 
- useEffect(() => {
-  const storedTheme = localStorage.getItem("darkMode");
-  if (storedTheme === "true") {
-    document.body.classList.add("dark");
-    setDarkMode(true);
-  } else {
-    document.body.classList.remove("dark");
-  }
-
-  const token = localStorage.getItem("token");
-  setIsLoggedIn(!!token);
-}, [location.pathname]); // re-check on route change
-
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("darkMode");
+    if (storedTheme === "true") {
+      document.body.classList.add("dark");
+      setDarkMode(true);
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, []);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -28,13 +22,13 @@ export default function Navbar() {
   };
 
   const handleLogout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-  sessionStorage.removeItem("welcomeShown");  // <== clear the welcome flag
-  setIsLoggedIn(false);
-  navigate("/");
-};
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    sessionStorage.removeItem("welcomeShown");
+    navigate("/");
+  };
 
+  const isLoggedIn = !!localStorage.getItem("token");
 
   return (
     <nav className="navbar">
@@ -61,6 +55,7 @@ export default function Navbar() {
     </nav>
   );
 }
+
 
 
 
