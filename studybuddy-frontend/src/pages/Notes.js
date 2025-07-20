@@ -10,10 +10,10 @@ export default function Notes() {
 
   useEffect(() => {
     fetchNotes();
-    checkWelcomeStatus();
+    handleWelcomeMessage();
   }, []);
 
-  const checkWelcomeStatus = () => {
+  const handleWelcomeMessage = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       setUsername(user.username);
@@ -22,7 +22,9 @@ export default function Notes() {
         setShowWelcome(true);
         sessionStorage.setItem("welcomeShown", "true");
 
-        setTimeout(() => setShowWelcome(false), 15000);
+        setTimeout(() => {
+          setShowWelcome(false);
+        }, 15000);  // 15 seconds
       }
     }
   };
@@ -104,5 +106,6 @@ export default function Notes() {
     </div>
   );
 }
+
 
 
