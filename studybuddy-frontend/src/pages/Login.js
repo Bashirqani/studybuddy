@@ -17,7 +17,6 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       navigate("/notes");
-      window.location.reload();  // Refresh to ensure Navbar updates
     } catch (err) {
       setError(err.response?.data?.msg || "Login failed");
     }
