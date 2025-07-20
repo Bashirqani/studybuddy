@@ -277,7 +277,7 @@ body.dark .note-form button {
   backface-visibility: hidden;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background: #f2f2f2;
+  background: lightblue;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
